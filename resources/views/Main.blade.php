@@ -26,8 +26,6 @@
             <a href="" class="mr-auto ml-2 text-lg py-2 rounded">Inicio</a>
             <a href="" class="mr-auto ml-2 text-lg py-2 rounded">Workstation</a>
             <a href="" class="mr-auto ml-2 text-lg  py-2 rounded">Usuário</a>
-
-
         </div>
 
 
