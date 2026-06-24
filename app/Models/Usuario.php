@@ -15,7 +15,8 @@ class Usuario extends Model
         "senha",
         "nome",
         "cpf",
-        "cep"
+        "cep",
+        "assinatura"
 
     ];
     use HasFactory;

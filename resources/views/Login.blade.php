@@ -4,14 +4,21 @@
 
 @section('conteudo')
 
-    <form action="{{ route("login.store") }}" method="POST" class="pb-2 pt-2">
-        @csrf
+    <div class="bg-slate-100 shadow-2xl shadow-black p-2.5 ">
+        <form action="{{ route('user.authenticate') }}" method="GET" class="flex flex-col">
+            @csrf
 
-        <x-campo-texto required type="text" name="email" placeholder="nome"/>
-        <x-campo-texto required type="text" name="senha" placeholder="preco"/>
-        <x-button class="m-1">Enviar</x-button>
+            <label for="email">Email</label>
+            <x-campo-texto required type="text" name="email" placeholder="email" />
+            <label for="senha">Senha</label>
+            <x-campo-texto required type="text" name="senha" placeholder="Senha" />
+            <x-button class="bg-white mt-2">Enviar</x-button>
 
-    </form>
+        </form>
+
+    </div>
+
+
 
 
 

@@ -10,8 +10,9 @@
             <h1 class="text-blue-500 font-bold text-9xl mt-10">Bem-Vindo!</h1>
             <h1 class="text-blue-500 font-bold text-5xl mt-10">O que deseja fazer?</h1>
             <div class="mt-10 flex justify-between gap-10">
-                <a href="{{ route('login.create') }}"><x-button>Entrar</x-button></a>
-                <x-button>Registrar </x-button>
+
+                <a href="{{ route('user.enter') }}"><x-button>Entrar</x-button></a>
+                <a href="{{ route('user.create') }}"><x-button>Registrar</x-button></a>
             </div>
 
             <div class="mt-10 flex justify-between gap-10 w-[90%] h-[50%]">
@@ -47,4 +48,3 @@
 @section('scripts')
 
 @endsection
-
