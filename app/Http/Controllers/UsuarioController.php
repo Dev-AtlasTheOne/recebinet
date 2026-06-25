@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegistroRequest;
 use App\Models\Usuario;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
 
 class UsuarioController extends Controller
 {
     public function index()
     {
         $usuarios = Usuario::all();
+
         return $usuarios;
 
     }
@@ -32,45 +32,61 @@ class UsuarioController extends Controller
         return view('Registro');
     }
 
-    public function Authenticate(Request $request)
+    public function exit(Request $request)
     {
 
+        Auth::logout();
 
+        // Invalidate session
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
+        return redirect('home.index')->with('successo', 'Usuário saiu');
+    }
+
+    public function Authenticate(LoginRequest $request)
+    {
+
+        // Validate the input
+        $credentials = $request->validated();
+
+        // Attempt to log in
+        if (Auth::attempt($credentials)) {
+            // Regenerate session for security
+            $request->session()->regenerate();
+
+            // Redirect to intended page or home
+            return redirect()->intended('home.index')->with('successo', 'Usuário logado');
+        }
+
+        // If login fails, redirect back with error
+        return back()
+            ->withErrors(['email' => 'The provided credentials do not match our records.'])
+            ->onlyInput('email');
 
     }
+
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RegistroRequest $request)
     {
-        $request->validate([
-            "email" => "required|email",
-            "senha" => "required|min:6",
-            "nome" =>"required",
-            "cpf" =>"required|cpf",
-            "cep" =>"required|digits:8",
-
-
-
-        ]);
+        $request->validated();
 
         $usuario = Usuario::create([
-            "email" => $request->email,
-            "senha" => Hash::make($request->senha),
-            "nome" => $request->nome,
-            "cpf" => $request->cpf,
-            "cep" => $request->cep,
-            "assinatura" => "$request->nome $request->cpf",
+            'email' => $request->email,
+            'senha' => Hash::make($request->senha),
+            'nome' => $request->nome,
+            'cpf' => $request->cpf,
+            'cep' => $request->cep,
+            'assinatura' => "$request->nome $request->cpf",
 
         ]);
 
-        Auth::login($usuario, true);
+        Auth::login($usuario);
 
-        return redirect()->route('home.index');
+        return redirect()->route('home.index')->with('sucesso', 'Usuário registrado!');
     }
-
-
 
     /**
      * Display the specified resource.
@@ -94,6 +110,7 @@ class UsuarioController extends Controller
     public function update(Request $request, Usuario $usuario)
     {
         $usuario->update($request->all());
+
         return redirect('/');
     }
 
@@ -103,6 +120,7 @@ class UsuarioController extends Controller
     public function destroy(Usuario $usuario)
     {
         $usuario->delete();
+
         return redirect()->back();
     }
 }

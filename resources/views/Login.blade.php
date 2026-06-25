@@ -5,8 +5,18 @@
 @section('conteudo')
 
     <div class="bg-slate-100 shadow-2xl shadow-black p-2.5 ">
-        <form action="{{ route('user.authenticate') }}" method="GET" class="flex flex-col">
+        @if ($errors->any())
+            <div class="bg-red-700 ">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        <form action="{{ route('user.authenticate') }}" method="POST" class="flex flex-col">
             @csrf
+            @method('POST')
 
             <label for="email">Email</label>
             <x-campo-texto required type="text" name="email" placeholder="email" />

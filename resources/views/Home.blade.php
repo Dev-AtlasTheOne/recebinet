@@ -7,13 +7,27 @@
     <div class="w-full h-full bg-blue-500 flex justify-center items-center overflow-auto">
 
         <div class="w-[80%] h-[90%] mb-10 bg-slate-100 flex flex-col items-center shadow-black shadow-2xl">
-            <h1 class="text-blue-500 font-bold text-9xl mt-10">Bem-Vindo!</h1>
-            <h1 class="text-blue-500 font-bold text-5xl mt-10">O que deseja fazer?</h1>
-            <div class="mt-10 flex justify-between gap-10">
+            @auth
+                <h1 class="text-blue-500 font-bold text-9xl mt-10">Bem-Vindo!</h1>
+                <h1 class="text-blue-500 font-bold text-5xl mt-10">{{ Auth::user()->nome }}</h1>
 
-                <a href="{{ route('user.enter') }}"><x-button>Entrar</x-button></a>
-                <a href="{{ route('user.create') }}"><x-button>Registrar</x-button></a>
-            </div>
+                <div class="mt-10 flex justify-between gap-10">
+
+                    <a href="{{ route('user.exit') }}"><x-button>Sair</x-button></a>
+
+                </div>
+            @endauth
+            @guest
+                <h1 class="text-blue-500 font-bold text-9xl mt-10">Bem-Vindo!</h1>
+                <h1 class="text-blue-500 font-bold text-5xl mt-10">O que deseja fazer?</h1>
+
+
+                <div class="mt-10 flex justify-between gap-10">
+
+                    <a href="{{ route('user.enter') }}"><x-button>Entrar</x-button></a>
+                    <a href="{{ route('user.create') }}"><x-button>Registrar</x-button></a>
+                </div>
+            @endguest
 
             <div class="mt-10 flex justify-between gap-10 w-[90%] h-[50%]">
                 <x-card>
