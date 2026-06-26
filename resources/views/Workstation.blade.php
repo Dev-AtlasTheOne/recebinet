@@ -12,6 +12,7 @@
                         <th scope="col">titulo</th>
                         <th>status</th>
                         <th>Usuário destinatário</th>
+                        <th>Para:</th>
                         <th>Assinatura</th>
                         <th>Visualizar</th>
                     </tr>
@@ -21,8 +22,9 @@
                     @forelse ($pdfsEnviados as $pdf)
                         <tr>
                             <td scope="col" class="text-center pb-3 pt-3">{{ $pdf->titulo }}</td>
-                            <td scope="col" class="text-center">{{ $pdf->status }}</td>
-                            <td scope="col" class="text-center">{{ $pdf->usuarioRecebido->nome }}</td>
+                            <td scope="col" class="text-center m-1">{{ $pdf->status }}</td>
+                            <td scope="col" class="text-center m-1">{{ $pdf->usuarioRecebido->nome }}</td>
+                            <td scope="col" class="text-center m-1">{{ $pdf->usuarioRecebido->cidade }}</td>
                             @if ($pdf->status == 'Recebido')
                                 <td scope="col" class="text-center">{{ $pdf->usuarioRecebido->assinatura }}</td>
                             @else
@@ -61,6 +63,7 @@
                         <th scope="col">titulo</th>
                         <th>status</th>
                         <th>Usuário remetente</th>
+                        <th>de:</th>
                         <th>Recebimento</th>
                         <th>Visualizar</th>
                     </tr>
@@ -69,15 +72,10 @@
 
                     @forelse ($pdfsRecebidos as $pdf)
                         <tr>
-
-                            dd([
-                            'db_path' => $pdf->path,
-                            'full_path' => storage_path('app/'.$pdf->path),
-                            'exists' => file_exists(storage_path('app/'.$pdf->path)),
-                            ]);
                             <td scope="col" class="text-center pb-3 pt-3">{{ $pdf->titulo }}</td>
                             <td scope="col" class="text-center">{{ $pdf->status }}</td>
                             <td scope="col" class="text-center">{{ $pdf->usuarioRecebido->nome }}</td>
+                            <td scope="col" class="text-center">{{ $pdf->usuarioRecebido->cidade }}</td>
                             @if ($pdf->status != 'Recebido')
                                 <td scope="col" class="text-center">
                                     <form action="{{ route('pdf.receive', $pdf->id) }}" method="POST">
@@ -115,7 +113,7 @@
 
     </div>
 
-    <div class="w-[90%]">
+    <div class="w-[90%] h-[10%] flex justify-start items-center">
         <x-button id="abrirModal" class="text-white">Enviar PDF</x-button></a>
     </div>
     @if ($errors->any())

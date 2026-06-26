@@ -18,7 +18,7 @@
         @endif
         <form action="{{ route('user.store') }}" method="POST" class="flex flex-col">
             @csrf
-            @method('POST')
+
 
             <label for="email">Email</label>
             <x-campo-texto required type="text" name="email" placeholder="Email" />

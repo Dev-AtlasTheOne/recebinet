@@ -28,4 +28,19 @@ class PdfRequest extends FormRequest
             'pdf' => 'required|file|mimes:pdf',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'titulo.required' => 'Email é obrigatório',
+
+            'cpf.required' => 'Senha é obrigatória',
+            'cpf.digits' => 'CPF precisa estar no formato xxxxxxxxxxx',
+
+            'pdf.required' => 'CPF é obrigatório',
+            'pdf.file' => 'Precisa ser um arquivo',
+            'pdf.mimes' => 'Precisa ser um PDF',
+
+        ];
+    }
 }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nome');
             $table->string('cpf');
             $table->string('cep');
+            $table->string('cidade');
             $table->string('assinatura');
             $table->timestamps();
         });

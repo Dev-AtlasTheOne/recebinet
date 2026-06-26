@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegistroRequest;
 use App\Models\Usuario;
+use App\Services\CidadeCEP;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -71,9 +72,11 @@ class UsuarioController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(RegistroRequest $request)
+    public function store(RegistroRequest $request, CidadeCEP $cidadecep)
     {
         $request->validated();
+
+        $dataCEP = $cidadecep->buscarCep($request->cep);
 
         $usuario = Usuario::create([
             'email' => $request->email,
@@ -81,6 +84,7 @@ class UsuarioController extends Controller
             'nome' => $request->nome,
             'cpf' => $request->cpf,
             'cep' => $request->cep,
+            'cidade' => $dataCEP['localidade'] ?? null,
             'assinatura' => "$request->nome $request->cpf",
 
         ]);
@@ -103,7 +107,7 @@ class UsuarioController extends Controller
      */
     public function edit(Usuario $usuario)
     {
-        //
+        return view('Settings');
     }
 
     /**

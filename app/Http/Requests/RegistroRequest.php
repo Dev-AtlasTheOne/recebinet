@@ -28,6 +28,7 @@ class RegistroRequest extends FormRequest
             'nome' => 'required',
             'cpf' => 'required|unique:usuario,cpf|digits:11',
             'cep' => 'required|digits:8',
+
         ];
     }
 

@@ -17,6 +17,7 @@ class Usuario extends Authenticatable
         'nome',
         'cpf',
         'cep',
+        'cidade',
         'assinatura',
 
     ];

@@ -13,7 +13,7 @@ class PdfController extends Controller
     {
 
         return response()->file(
-            storage_path('app/'.$pdf->path)
+            storage_path('app/public/'.$pdf->path)
         );
     }
 
@@ -31,6 +31,8 @@ class PdfController extends Controller
 
         $data = $request->validated();
 
+        $path = $request->file('pdf')->store('pdfs', 'public');
+
         $usuarioRecebedor = Usuario::where('cpf', $request->cpf)->first();
 
         if (! $usuarioRecebedor) {
@@ -41,7 +43,7 @@ class PdfController extends Controller
 
         Pdf::create([
             'titulo' => $data['titulo'],
-            'path' => $request->file('pdf')->store('pdfs'),
+            'path' => $path,
             'fk_usuario_envio' => Auth::id(),
             'fk_usuario_recebido' => $usuarioRecebedor->id,
         ]);

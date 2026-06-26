@@ -10,6 +10,11 @@ Route::get('/', function () {
 
 Route::get('/login', [UsuarioController::class, 'enter'])->name('login');
 
+Route::get('/settings', [UsuarioController::class, 'edit'])->name('user.edit');
+
+Route::get('/settings/assinatura/update', [UsuarioController::class, 'update'])->name('user.update');
+Route::get('/settings/{Usuario}/update', [UsuarioController::class, 'update'])->name('user.update');
+
 Route::post('/login/authenticate', [UsuarioController::class, 'authenticate'])->name('user.authenticate');
 
 Route::get('/login/logout', [UsuarioController::class, 'exit'])->name('user.exit');
