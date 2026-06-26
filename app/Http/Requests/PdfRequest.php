@@ -24,7 +24,7 @@ class PdfRequest extends FormRequest
     {
         return [
             'titulo' => 'required|string',
-            'cpf' => 'required|unique:usuario,cpf|cpf',
+            'cpf' => 'required|digits:11',
             'pdf' => 'required|file|mimes:pdf',
         ];
     }

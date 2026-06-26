@@ -63,7 +63,7 @@ class UsuarioController extends Controller
 
         // If login fails, redirect back with error
         return back()
-            ->withErrors(['email' => 'The provided credentials do not match our records.'])
+            ->withErrors(['email' => 'Nãop encontramos um usuário com essas credenciais'])
             ->onlyInput('email');
 
     }

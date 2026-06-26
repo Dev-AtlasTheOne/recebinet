@@ -9,10 +9,18 @@ use Illuminate\Support\Facades\Auth;
 
 class PdfController extends Controller
 {
+    public function view(Pdf $pdf)
+    {
+
+        return response()->file(
+            storage_path('app/'.$pdf->path)
+        );
+    }
+
     public function index()
     {
-        $pdfsEnviados = auth()->user()->pdfsEnviados()->with('usuario_recebido')->get();
-        $pdfsRecebidos = auth()->user()->pdfsRecebidos()->with('usuario_envio')->get();
+        $pdfsEnviados = auth()->user()->pdfsEnviados()->with('usuarioRecebido')->get();
+        $pdfsRecebidos = auth()->user()->pdfsRecebidos()->with('usuarioEnvio')->get();
 
         return view('Workstation', compact('pdfsEnviados', 'pdfsRecebidos'));
 
@@ -41,5 +49,21 @@ class PdfController extends Controller
         return redirect()
             ->route('workstation.index')
             ->with('sucesso', 'PDF enviado com sucesso');
+    }
+
+    public function receive(Pdf $pdf)
+    {
+
+        if ($pdf->fk_usuario_recebido !== Auth::id()) {
+            abort(403);
+        }
+
+        $pdf->update([
+            'status' => 'Recebido',
+            'data_recebido' => now(),
+            'assinatura' => Auth::user()->assinatura,
+        ]);
+
+        return back()->with('sucesso', 'PDF recebido com sucesso');
     }
 }

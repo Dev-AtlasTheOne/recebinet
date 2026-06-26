@@ -26,7 +26,7 @@ class RegistroRequest extends FormRequest
             'email' => 'required|unique:usuario,email|email',
             'senha' => 'required|min:6',
             'nome' => 'required',
-            'cpf' => 'required|unique:usuario,cpf|cpf',
+            'cpf' => 'required|unique:usuario,cpf|digits:11',
             'cep' => 'required|digits:8',
         ];
     }
@@ -35,12 +35,14 @@ class RegistroRequest extends FormRequest
     {
         return [
             'email.required' => 'Email é obrigatório',
+            'email.unique' => 'Este email já está registrado',
             'email.email' => 'Email precisa ser válido',
             'senha.required' => 'Senha é obrigatória',
             'senha.min' => 'Senha precisa ter no minimo 6 digitos',
             'nome.required' => 'Nome é obrigatório',
             'cpf.required' => 'CPF é obrigatório',
-            'cpf.cpf' => 'CPF precisa estar no formato xxx.xxx.xxx-xx',
+            'cpf.unique' => 'este CPF já está registrado',
+            'cpf.digits' => 'CPF precisa estar no formato xxxxxxxxxxx',
             'cep.required' => 'CEP é obrigatório',
             'cep.digits' => 'CEP é precisa ser no formato xxxxxxxx',
         ];

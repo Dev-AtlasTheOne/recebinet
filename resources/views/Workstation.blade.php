@@ -3,58 +3,115 @@
 @section('title', 'Workstation')
 
 @section('conteudo')
-    <div class="w-[90%] h-[90%] flex justify-between gap-5 items-center">
-        <div class="w-[90%] h-[90%] bg-white">
+    <div class="w-[99%] h-full flex justify-between  items-center gap-0.5">
+        <div class="w-[90%] h-[90%] bg-white border border-black">
             <h1 class="w-full flex justify-center p-2 bg-blue-500 text-white font-extrabold text-3xl">PDFs enviados</h1>
-            <div class="flex  justify-between items-center p-1 border border-black">
+            <table class="min-w-full divide-y divide-table-line">
+                <thead>
+                    <tr>
+                        <th scope="col">titulo</th>
+                        <th>status</th>
+                        <th>Usuário destinatário</th>
+                        <th>Assinatura</th>
+                        <th>Visualizar</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-table-line ">
 
-                <h1>titulo</h1>
-                <h1>status</h1>
-                <h1>Usuário Remetente</h1>
-                <h1>Assinatura</h1>
-                <h1>Download</h1>
-            </div>
-            @foreach ($pdfsEnviados as $pdf)
-                <div class="flex  justify-between items-center p-1 border border-black">
-                    <h1>{{ $pdf->titulo }}</h1>
-                    <h1>{{ $pdf->status }}</h1>
-                    <h1>{{ $pdf->usuarioRecebido->nome }}</h1>
-                    <a href=""><x-button class="text-white">Download</x-button></a>
+                    @forelse ($pdfsEnviados as $pdf)
+                        <tr>
+                            <td scope="col" class="text-center pb-3 pt-3">{{ $pdf->titulo }}</td>
+                            <td scope="col" class="text-center">{{ $pdf->status }}</td>
+                            <td scope="col" class="text-center">{{ $pdf->usuarioRecebido->nome }}</td>
+                            @if ($pdf->status == 'Recebido')
+                                <td scope="col" class="text-center">{{ $pdf->usuarioRecebido->assinatura }}</td>
+                            @else
+                                <td scope="col" class="text-center">-</td>
+                            @endif
+                            <td scope="col" class="text-center">
+                                <form action="{{ route('pdf.view', $pdf->id) }}" method="POST">
+                                    @csrf
 
-                </div>
-            @endforeach
+                                    <x-button class="text-white">Visualizar</x-button>
+
+                                </form>
+                            </td>
 
 
+
+                        </tr>
+                    @empty
+                    @endforelse
+                </tbody>
+
+
+
+            </table>
 
         </div>
-        <div class="w-[90%] h-[90%] bg-white ">
+
+
+
+
+        <div class="w-[90%] h-[90%] bg-white border border-black">
             <h1 class="w-full flex justify-center p-2 bg-blue-500 text-white font-extrabold text-3xl">PDFs recebidos</h1>
-            <div class="flex  justify-between items-center p-1 border border-black">
+            <table class="min-w-full divide-y divide-table-line">
+                <thead>
+                    <tr>
+                        <th scope="col">titulo</th>
+                        <th>status</th>
+                        <th>Usuário remetente</th>
+                        <th>Recebimento</th>
+                        <th>Visualizar</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-table-line ">
 
-                <h1>titulo</h1>
-                <h1>status</h1>
-                <h1>Usuário destinatário</h1>
-                <h1>Recebimento</h1>
-                <h1>Download</h1>
+                    @forelse ($pdfsRecebidos as $pdf)
+                        <tr>
+
+                            dd([
+                            'db_path' => $pdf->path,
+                            'full_path' => storage_path('app/'.$pdf->path),
+                            'exists' => file_exists(storage_path('app/'.$pdf->path)),
+                            ]);
+                            <td scope="col" class="text-center pb-3 pt-3">{{ $pdf->titulo }}</td>
+                            <td scope="col" class="text-center">{{ $pdf->status }}</td>
+                            <td scope="col" class="text-center">{{ $pdf->usuarioRecebido->nome }}</td>
+                            @if ($pdf->status != 'Recebido')
+                                <td scope="col" class="text-center">
+                                    <form action="{{ route('pdf.receive', $pdf->id) }}" method="POST">
+                                        @csrf
+
+                                        <x-button class="text-white">Receber</x-button>
+
+                                    </form>
+                                </td>
+                            @else
+                                <td>
+                                    <h1>Recebido!</h1>
+                                </td>
+                            @endif
+                            <td scope="col" class="text-center">
+                                <form action="{{ route('pdf.view', $pdf->id) }}" method="POST">
+                                    @csrf
+
+                                    <x-button class="text-white">Visualizar</x-button>
+
+                                </form>
+                            </td>
 
 
-            </div>
 
-            @foreach ($pdfsRecebidos as $pdf)
-                <div class="flex  justify-between items-center p-1 border border-black">
-                    <h1>{{ $pdf->titulo }}</h1>
-                    <h1>{{ $pdf->status }}</h1>
-                    <h1>{{ $pdf->usuarioRecebido->nome }}</h1>
-                    <a href=""><x-button class="text-white">Receber</x-button></a>
-                    <a href=""><x-button class="text-white">Download</x-button></a>
-
-                </div>
-            @endforeach
+                        </tr>
+                    @empty
+                    @endforelse
+                </tbody>
 
 
 
+            </table>
         </div>
-
 
     </div>
 
@@ -118,11 +175,5 @@
         document.getElementById('fecharModal').addEventListener('click', () => {
             modal.classList.add('hidden');
         });
-
-        @if ($errors->any())
-            document.addEventListener("DOMContentLoaded", () => {
-                modal.classList.remove('hidden');
-            });
-        @endif
     </script>
 @endpush
