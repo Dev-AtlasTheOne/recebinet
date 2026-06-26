@@ -21,7 +21,7 @@
             <label for="email">Email</label>
             <x-campo-texto required type="text" name="email" placeholder="email" />
             <label for="senha">Senha</label>
-            <x-campo-texto required type="text" name="senha" placeholder="Senha" />
+            <x-campo-texto required type="password" name="senha" placeholder="Senha" />
             <x-button class="bg-white mt-2">Enviar</x-button>
 
         </form>
@@ -30,8 +30,7 @@
 
 
 
-
-
-@section('scripts')
-
 @endsection
+
+@push('scripts')
+@endpush

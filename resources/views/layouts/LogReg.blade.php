@@ -9,7 +9,7 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="flex justify-center items-center h-dvh bg-blue-500">
+<body class="flex justify-center items-center min-h-screen bg-blue-500">
 
 
 

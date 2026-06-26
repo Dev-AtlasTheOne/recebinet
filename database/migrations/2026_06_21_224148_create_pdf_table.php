@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('pdf', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("fk_usuario_envio")->constrained("usuario")->onDelete("cascade");
-            $table->foreignId("fk_usuario_recebido")->constrained("usuario")->onDelete("cascade");;
+            $table->foreignId('fk_usuario_envio')->constrained('usuario')->onDelete('cascade');
+            $table->foreignId('fk_usuario_recebido')->constrained('usuario')->onDelete('cascade');
             $table->string('titulo');
-            $table->string('status');
-            $table->dateTime("data_envio");
-            $table->dateTime("data_recebido");
+            $table->string('status')->default('Aguardando recebimento');
+            $table->string('path');
+            $table->dateTime('data_envio')->useCurrent();
+            $table->dateTime('data_recebido')->nullable();
             $table->timestamps();
         });
     }

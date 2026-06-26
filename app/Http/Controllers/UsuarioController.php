@@ -7,7 +7,6 @@ use App\Http\Requests\RegistroRequest;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class UsuarioController extends Controller
 {
@@ -41,14 +40,17 @@ class UsuarioController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('home.index')->with('successo', 'Usuário saiu');
+        return redirect('/')->with('successo', 'Usuário saiu');
     }
 
     public function Authenticate(LoginRequest $request)
     {
 
         // Validate the input
-        $credentials = $request->validated();
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->senha,
+        ];
 
         // Attempt to log in
         if (Auth::attempt($credentials)) {
@@ -56,7 +58,7 @@ class UsuarioController extends Controller
             $request->session()->regenerate();
 
             // Redirect to intended page or home
-            return redirect()->intended('home.index')->with('successo', 'Usuário logado');
+            return redirect()->intended('/')->with('successo', 'Usuário logado');
         }
 
         // If login fails, redirect back with error
@@ -75,7 +77,7 @@ class UsuarioController extends Controller
 
         $usuario = Usuario::create([
             'email' => $request->email,
-            'senha' => Hash::make($request->senha),
+            'senha' => bcrypt($request->senha),
             'nome' => $request->nome,
             'cpf' => $request->cpf,
             'cep' => $request->cep,

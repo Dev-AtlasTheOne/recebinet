@@ -40,9 +40,8 @@
 
 
 
-
-
-
-@section('scripts')
-
 @endsection
+
+
+@push('scripts')
+@endpush
