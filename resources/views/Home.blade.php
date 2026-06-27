@@ -12,7 +12,7 @@
         <h1 class="text-blue-500 font-bold text-5xl mt-10">{{ Auth::user()->cidade }}</h1>
         <div class="mt-10 flex justify-between gap-10">
 
-            <a href="{{ route('user.exit') }}"><x-button>Sair</x-button></a>
+            <a href="{{ route('user.exit') }}"><x-button class="text-white">Sair</x-button></a>
 
         </div>
     @endauth
@@ -23,8 +23,8 @@
 
         <div class="mt-10 flex justify-between gap-10">
 
-            <a href="{{ route('login') }}"><x-button>Entrar</x-button></a>
-            <a href="{{ route('user.create') }}"><x-button>Registrar</x-button></a>
+            <a href="{{ route('login') }}"><x-button class="text-white">Entrar</x-button></a>
+            <a href="{{ route('user.create') }}"><x-button class="text-white">Registrar</x-button></a>
         </div>
     @endguest
 

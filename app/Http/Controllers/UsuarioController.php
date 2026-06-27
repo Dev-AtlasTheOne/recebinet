@@ -105,17 +105,14 @@ class UsuarioController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Usuario $usuario)
-    {
-        return view('Settings');
-    }
+    public function edit(Usuario $usuario) {}
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Usuario $usuario)
     {
-        $usuario->update($request->all());
+        $usuario->update($request->only('assinatura'));
 
         return redirect('/');
     }

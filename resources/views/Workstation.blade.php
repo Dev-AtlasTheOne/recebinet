@@ -15,6 +15,7 @@
                         <th>Para:</th>
                         <th>Assinatura</th>
                         <th>Visualizar</th>
+                        <th>Remover</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-table-line ">
@@ -38,7 +39,15 @@
 
                                 </form>
                             </td>
+                            <td scope="col" class="text-center">
+                                <form action="{{ route('pdf.destroy', $pdf->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
 
+                                    <x-button class="text-white bg-red-500">Visualizar</x-button>
+
+                                </form>
+                            </td>
 
 
                         </tr>
@@ -66,6 +75,7 @@
                         <th>de:</th>
                         <th>Recebimento</th>
                         <th>Visualizar</th>
+
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-table-line ">
@@ -98,6 +108,8 @@
 
                                 </form>
                             </td>
+
+
 
 
 

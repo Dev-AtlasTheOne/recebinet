@@ -68,4 +68,11 @@ class PdfController extends Controller
 
         return back()->with('sucesso', 'PDF recebido com sucesso');
     }
+
+    public function destroy(Pdf $pdf)
+    {
+        $pdf->delete();
+
+        return redirect()->back();
+    }
 }
