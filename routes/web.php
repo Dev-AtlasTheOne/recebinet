@@ -27,3 +27,5 @@ Route::post('/pdf/{pdf}/receive', [PdfController::class, 'receive'])->name('pdf.
 Route::post('/pdf/{pdf}/view', [PdfController::class, 'view'])->name('pdf.view')->middleware('auth');
 
 Route::delete('/pdf/{pdf}/delete', [PdfController::class, 'destroy'])->name('pdf.destroy')->middleware('auth');
+
+Route::get('/pdf/list', [PdfController::class, 'list'])->name('pdf.list')->middleware('auth');

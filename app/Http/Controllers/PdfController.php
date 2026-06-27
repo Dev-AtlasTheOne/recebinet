@@ -75,4 +75,11 @@ class PdfController extends Controller
 
         return redirect()->back();
     }
+
+    public function list()
+    {
+        return response()->json(
+            auth()->user()->pdfsRecebidos()->with('usuarioEnvio')->get()
+        );
+    }
 }

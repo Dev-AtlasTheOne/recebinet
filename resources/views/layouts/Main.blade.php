@@ -45,7 +45,7 @@
 
     <div class="w-full min-h-screen bg-blue-500 flex justify-center overflow-auto">
 
-        <div class="w-[80%] min-h-[90vh] mb-10 mt-10 bg-slate-100 flex flex-col items-center shadow-black shadow-2xl">
+        <div class="w-[85%] min-h-[90vh] mb-10 mt-10 bg-slate-100 flex flex-col items-center shadow-black shadow-2xl">
 
 
             @yield('conteudo')

@@ -44,7 +44,7 @@
                                     @csrf
                                     @method('DELETE')
 
-                                    <x-button class="text-white bg-red-500">Visualizar</x-button>
+                                    <x-button class="text-white bg-red-500">Cancelar</x-button>
 
                                 </form>
                             </td>
@@ -84,8 +84,8 @@
                         <tr>
                             <td scope="col" class="text-center pb-3 pt-3">{{ $pdf->titulo }}</td>
                             <td scope="col" class="text-center">{{ $pdf->status }}</td>
-                            <td scope="col" class="text-center">{{ $pdf->usuarioRecebido->nome }}</td>
-                            <td scope="col" class="text-center">{{ $pdf->usuarioRecebido->cidade }}</td>
+                            <td scope="col" class="text-center">{{ $pdf->usuarioEnvio->nome }}</td>
+                            <td scope="col" class="text-center">{{ $pdf->usuarioEnvio->cidade }}</td>
                             @if ($pdf->status != 'Recebido')
                                 <td scope="col" class="text-center">
                                     <form action="{{ route('pdf.receive', $pdf->id) }}" method="POST">
